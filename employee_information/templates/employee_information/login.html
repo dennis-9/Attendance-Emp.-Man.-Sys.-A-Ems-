@@ -5,11 +5,14 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% if page_title %}
-    <title>{{ page_title }} | Employee Information System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    
+    {% if page_title %}
+    <title>{{ page_title }} | Employee Attendance System</title>
     {% else %}
-    <title>Employee Information System</title>
+    <title>Employee Attendance System</title>
     {% endif %}
+    
     <link rel="stylesheet" href="{% static 'employee_information/assets/default/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'employee_information/assets/bootstrap/css/bootstrap.min.css' %}">
 
@@ -24,7 +27,12 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="{% static 'employee_information/assets/material-admin/css/demo/style.css' %}">
     <!-- End layout styles -->
+
     <link rel="shortcut icon" href="{% static 'employee_information/assets/material-admin/images/favicon.png' %}" />
+
+
+
+
     <script src="{% static 'employee_information/assets/default/js/jquery-3.6.0.min.js' %}">
     </script>
     <script src="{% static 'employee_information/assets/bootstrap/js/bootstrap.min.js' %}"></script>
@@ -41,9 +49,12 @@
                     <div class="mdc-layout-grid">
                         <div class="mdc-layout-grid__inner justify-content-center">
                             <div class="mdc-layout-grid__cell--span-2-desktop"></div>
+                            
                             <div class="mdc-card mdc-layout-grid__cell--span-8-desktop mdc-layout-grid__cell--span-1-tablet mb-5">
-                                <h3 class="text-center">Employee Information System</h3>
+                                <h3 class="text-center">Employee Attendance System</h3>
                             </div>
+
+
                         </div>
                         <div class="mdc-layout-grid__inner">
                             <div class="stretch-card mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-1-tablet"></div>
@@ -86,6 +97,10 @@
             </div>
         </div>
     </div>
+
+
+
+
     <script>
         window.start_loader = function() {
             $('body').removeClass('loaded')
@@ -131,10 +146,14 @@
         })
     </script>
 
+
+
+
     <script src="{% static 'employee_information/assets/material-admin/vendors/js/vendor.bundle.base.js' %}"></script>
     <script src="{% static 'employee_information/assets/material-admin/js/material.js' %}"></script>
     <script src="{% static 'employee_information/assets/material-admin/js/misc.js' %}"></script>
     <script src="{% static 'employee_information/assets/material-admin/js/dashboard.js' %}"></script>
+    
     <script>
         $(function() {
             $('#login-user').submit(function(e) {

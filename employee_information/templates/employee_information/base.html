@@ -5,8 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% if page_title %}
-    <title>{{ page_title }} | Employee Information System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% if page_title %}
+    <title>
+        {{ page_title }} | Employee Information System</title>
     {% else %}
     <title>Employee Information System</title>
     {% endif %}
@@ -46,15 +49,22 @@
 
 <body>
     <script src="{% static 'employee_information/assets/material-admin/js/preloader.js ' %}"></script>
+
+
     <div class="body-wrapper">
+
         <!-- Aside -->
         {% block navigation %} {% include "employee_information/navigation.html" %} {% endblock navigation %}
         <!-- Aside -->
+
         <div class="main-wrapper mdc-drawer-app-content">
+
             <!-- Top Navigation -->
             {% block TopNavigation %} {% include "employee_information/TopNavigation.html" %} {% endblock TopNavigation %}
             <!-- Top Navigation -->
+
             <div class="page-wrapper mdc-toolbar-fixed-adjust">
+
                 <main class="content-wrapper">
                     <div class="mdc-layout-grid">
                         <div class="mdc-layout-grid__inner">
@@ -62,23 +72,29 @@
                         </div>
                     </div>
                 </main>
+
+
+
+
                 <!-- partial:partials/_footer.html -->
                 <footer>
                     <div class="mdc-layout-grid">
                         <div class="mdc-layout-grid__inner">
                             <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
-                                <span class="text-center text-sm-left d-block d-sm-inline-block tx-14">Copyright © <a href="https://www.sourcecodester.com/users/tips23" target="_blank">oretnom23</a> {% now 'Y' %}</span>
-                            </div>
-                            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop d-flex justify-content-end">
-                                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center tx-14">Free <a href="https://www.bootstrapdash.com/material-design-dashboard/" target="_blank"> material admin </a> dashboards from Bootstrapdash.com</span>
+                                <span class="text-center text-sm-left d-block d-sm-inline-block tx-14">
+                                    © Copyright {% now 'Y' %}. The MakersPlace. Powered by ....</span>
                             </div>
                         </div>
                     </div>
                 </footer>
+
                 <!-- partial -->
             </div>
         </div>
     </div>
+
+
+
     {% block ScriptBlock %} {% endblock ScriptBlock %}
     <div class="modal fade" id="uni_modal" role='dialog'>
         <div class="modal-dialog modal-md modal-dialog-centered" role="document">
@@ -86,6 +102,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title"></h5>
                 </div>
+
                 <div class="modal-body">
                 </div>
                 <div class="modal-footer">
@@ -95,6 +112,8 @@
             </div>
         </div>
     </div>
+
+
     <div class="modal fade" id="confirm_modal" role='dialog'>
         <div class="modal-dialog modal-md modal-dialog-centered" role="document">
             <div class="modal-content rounded-0">
@@ -113,14 +132,20 @@
     </div>
 
 
+
+
     <script>
+        //removes the "loaded" class, indicating that the page is currently loading.
         window.start_loader = function() {
             $('body').removeClass('loaded')
         }
+        //adds the "loaded" class back, indicating that the page has finished loading.
         window.end_loader = function() {
             $('body').addClass('loaded')
         }
+        //
         window.uni_modal = function($title = '', $url = '', $size = "") {
+            // start_loader() is called to initiate the loading state.
             start_loader()
             $.ajax({
                 url: $url,
@@ -128,6 +153,7 @@
                     console.log()
                     alert("An error occured")
                 },
+                //The response (resp) is injected into the modal's title and body.
                 success: function(resp) {
                     if (resp) {
                         $('#uni_modal .modal-title').html($title)
@@ -148,6 +174,14 @@
                 }
             })
         }
+
+        //_conf Function is used to display a confirmation modal dialog
+
+        /*
+        $msg represents the confirmation message to be displayed.
+        $func is the name of the function to be executed upon confirmation.
+        $params is an array containing parameters to be passed to the function
+        */
         window._conf = function($msg = '', $func = '', $params = []) {
             $('#confirm_modal #confirm').attr('onclick', $func + "(" + $params.join(',') + ")")
             $('#confirm_modal .modal-body').html($msg)

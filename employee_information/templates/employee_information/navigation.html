@@ -2,9 +2,11 @@
 <!-- partial:partials/_sidebar.html -->
 <aside class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
     <div class="mdc-drawer__header border-bottom border-light">
+
         <a href="{% url 'home-page' %}" class="brand-logo">
             <img src="{% static 'employee_information/assets/material-admin/images/MakersPlaceGH-Logo.png' %}" alt="user" class="user">
         </a>
+
     </div>
     <div class="mdc-drawer__content">
         <div class="mdc-list-group">
@@ -28,7 +30,16 @@
                     <a class="mdc-drawer-link" href="{% url 'employee-page' %}">
                         <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">group</i> Employee List
                     </a>
+
+
+
+                    <!--Just Added-->
                 </div>
+                    <div class="mdc-list-item mdc-drawer-item">
+                        <a class="mdc-drawer-link" href="{% url 'attendance-page' %}">
+                            <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">check</i> <p>Today's Attendance</p>
+                        </a>
+                    </div>
             </nav>
         </div>
     </div>

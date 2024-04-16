@@ -267,3 +267,99 @@ def view_employee(request):
         'positions' : positions
     }
     return render(request, 'employee_information/view_employee.html',context)
+
+
+
+
+
+# TODO:----------------------------------------------------------------TODO
+
+@login_required
+def attendance(request):
+    pass
+    employee_list = Employees.objects.all()
+    # Logic to fetch employee data from models
+    # This fetches all the employees data such as the the employee, departments and positions
+    context = {
+        'page_title':'Employees',
+        'employees':employee_list,
+    }
+    return render(request, 'employee_information/attendance.html',context)
+
+@login_required
+def manage_employees(request):
+    employee = {}
+    departments = Department.objects.filter(status = 1).all() 
+    positions = Position.objects.filter(status = 1).all()
+    # Almost same logic as before will be carried out here
+    if request.method == 'GET':
+        data =  request.GET
+        id = ''
+        if 'id' in data:
+            id= data['id']
+        if id.isnumeric() and int(id) > 0:
+            employee = Employees.objects.filter(id=id).first()
+    context = {
+        'employee' : employee,
+        'departments' : departments,
+        'positions' : positions
+    }
+    return render(request, 'employee_information/manage_employee.html',context)
+
+@login_required
+def save_employee(request):
+    data =  request.POST
+    resp = {'status':'failed'}
+    if (data['id']).isnumeric() and int(data['id']) > 0:
+        check  = Employees.objects.exclude(id = data['id']).filter(code = data['code'])
+    else:
+        check  = Employees.objects.filter(code = data['code'])
+
+    if len(check) > 0:
+        resp['status'] = 'failed'
+        resp['msg'] = 'Code Already Exists'
+    else:
+        try:
+            dept = Department.objects.filter(id=data['department_id']).first()
+            pos = Position.objects.filter(id=data['position_id']).first()
+            if (data['id']).isnumeric() and int(data['id']) > 0 :
+                save_employee = Employees.objects.filter(id = data['id']).update(code=data['code'], firstname = data['firstname'],middlename = data['middlename'],lastname = data['lastname'],dob = data['dob'],gender = data['gender'],contact = data['contact'],email = data['email'],address = data['address'],department_id = dept,position_id = pos,date_hired = data['date_hired'],salary = data['salary'],status = data['status'])
+            else:
+                save_employee = Employees(code=data['code'], firstname = data['firstname'],middlename = data['middlename'],lastname = data['lastname'],dob = data['dob'],gender = data['gender'],contact = data['contact'],email = data['email'],address = data['address'],department_id = dept,position_id = pos,date_hired = data['date_hired'],salary = data['salary'],status = data['status'])
+                save_employee.save()
+            resp['status'] = 'success'
+        except Exception:
+            resp['status'] = 'failed'
+            print(Exception)
+            print(json.dumps({"code":data['code'], "firstname" : data['firstname'],"middlename" : data['middlename'],"lastname" : data['lastname'],"dob" : data['dob'],"gender" : data['gender'],"contact" : data['contact'],"email" : data['email'],"address" : data['address'],"department_id" : data['department_id'],"position_id" : data['position_id'],"date_hired" : data['date_hired'],"salary" : data['salary'],"status" : data['status']}))
+    return HttpResponse(json.dumps(resp), content_type="application/json")
+
+@login_required
+def delete_employee(request):
+    data =  request.POST
+    resp = {'status':''}
+    try:
+        Employees.objects.filter(id = data['id']).delete()
+        resp['status'] = 'success'
+    except:
+        resp['status'] = 'failed'
+    return HttpResponse(json.dumps(resp), content_type="application/json")
+
+@login_required
+def view_employee(request):
+    employee = {}
+    departments = Department.objects.filter(status = 1).all() 
+    positions = Position.objects.filter(status = 1).all() 
+    if request.method == 'GET':
+        data =  request.GET
+        id = ''
+        if 'id' in data:
+            id= data['id']
+        if id.isnumeric() and int(id) > 0:
+            employee = Employees.objects.filter(id=id).first()
+    context = {
+        'employee' : employee,
+        'departments' : departments,
+        'positions' : positions
+    }
+    return render(request, 'employee_information/view_employee.html',context)
