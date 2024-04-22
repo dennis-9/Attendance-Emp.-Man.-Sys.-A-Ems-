@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,8 +26,6 @@ SECRET_KEY = 'django-insecure--w(dug*va_megpa25w$gmv8o6+f8!fg_*m1^u$)z25pab0hicm
 DEBUG = True
 
 ALLOWED_HOSTS = [".vercel.app"]
-
-CSRF_TRUSTED_ORIGINS = ["http://*,on-acorn.io", "https://*,on-acorn.io"]
 
 
 # Application definition
