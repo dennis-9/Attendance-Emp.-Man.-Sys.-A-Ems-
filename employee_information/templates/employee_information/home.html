@@ -60,6 +60,21 @@
 </div>
 
 
+<!-- Attendance For Today's List-->
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet">
+    <div class="mdc-card info-card info-card--info">
+        <div class="card-inner">
+            <h5 class="card-title">Attendance</h5>
+            <h5 class="font-weight-light pb-2 mb-1 border-bottom">{{ total_fingerprint |intcomma }}</h5>
+            <p class="tx-12 text-muted">Over All Count of Today's Attendance</p>
+            <div class="card-icon-wrapper">
+                <i class="material-icons">check</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- <table style="width:100%">
     {% for employee in employees %}
     <tr>

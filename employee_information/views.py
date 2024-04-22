@@ -189,8 +189,8 @@ def delete_position(request):
 
 
 
-@login_required
 # Employees
+@login_required
 def employees(request):
     employee_list = Employees.objects.all()
     # Logic to fetch employee data from models
@@ -284,7 +284,6 @@ def view_employee(request):
 # TODO:----------------------------------------------------------------TODO
 # TODO:----------------------------------------------------------------TODO
 # TODO:----------------------------------------------------------------TODO
-
 @login_required
 def employee_info(request):
     pass
@@ -297,7 +296,7 @@ def employee_info(request):
     }
     return render(request, 'employee_information/attendance.html',context)
 
-@login_required
+"""@login_required
 def manage_employees(request):
     employee = {}
     departments = Department.objects.filter(status = 1).all() 
@@ -373,10 +372,11 @@ def view_employee(request):
         'departments' : departments,
         'positions' : positions
     }
-    return render(request, 'employee_information/view_employee.html',context)
+    return render(request, 'employee_information/view_employee.html',context)"""
 
-# TODO----------------------------------------------------------------
-
+# TODO:----------------------------------------------------------------TODO
+# TODO:----------------------------------------------------------------TODO
+# TODO:----------------------------------------------------------------TODO
 
 
 

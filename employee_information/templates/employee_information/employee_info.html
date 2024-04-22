@@ -1,5 +1,7 @@
 {% extends "employee_information/base.html" %} 
-{% block attendancecontent %}
+
+
+{% block pageContent %}
 
 
 
@@ -14,12 +16,12 @@
     <li>Department: {{ department }}</li>
     <li>Position: {{ position }}</li>
 </ul>
-{% endblock attendancecontent %}
+{% endblock pageContent %}
  
 
 
 
-{% block ScriptBlock %}
+{% comment %} {% block ScriptBlock %}
 <script>
     $(function() {
         $('#create_new').click(function() {
@@ -65,4 +67,4 @@
     }
 </script>
 
-{% endblock ScriptBlock %}
+{% endblock ScriptBlock %} {% endcomment %}
