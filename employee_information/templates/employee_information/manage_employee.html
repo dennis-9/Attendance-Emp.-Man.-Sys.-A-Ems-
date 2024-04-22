@@ -1,6 +1,9 @@
 <div class="container-fluid">
     <form action="" id="employee-form">
-        <input type="hidden" name="id" value="{% if employee.pk %}{{employee.pk}}{% endif %}">
+        <input type="hidden" name="id" value="
+        {% if employee.pk %}{
+            {employee.pk}}
+            {% endif %}">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group mb-3">
@@ -51,6 +54,7 @@
                     <label for="address" class="control-label">Address</label>
                     <textarea rows="3" name="address" id="address" class="form-control form-control-sm rounded-0" required>{% if employee.address %}{{employee.address}}{% endif %}</textarea>
                 </div>
+
             </div>
             <div class="col-md-6">
                 <div class="form-group mb-3">
@@ -114,6 +118,7 @@
                         <option value="0">Inactive</option>
                         {% endif %}
                     </select>
+                </div>
                 </div>
             </div>
         </div>

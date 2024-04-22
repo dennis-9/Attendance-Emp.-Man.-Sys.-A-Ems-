@@ -1,0 +1,68 @@
+{% extends "employee_information/base.html" %} 
+{% block attendancecontent %}
+
+
+
+<h1>Attendance</h1>
+<ul>
+    {% if scan_time %}
+        <p>Scan Time: {{ scan_time }}</p>
+    {% endif %}
+    <li>ID: {{ employee_id }}</li>
+    <li>Firstname: {{ firstname }}</li>
+    <li>Lastname: {{ lastname }}</li>
+    <li>Department: {{ department }}</li>
+    <li>Position: {{ position }}</li>
+</ul>
+{% endblock attendancecontent %}
+ 
+
+
+
+{% block ScriptBlock %}
+<script>
+    $(function() {
+        $('#create_new').click(function() {
+            uni_modal("Add New Employee", "{% url 'manage_employees-page' %}", 'modal-lg')
+        })
+        $('.view-data').click(function() {
+            uni_modal("Employee Details", "{% url 'view-employee-page' %}?id=" + $(this).attr('data-id'), 'mid-large')
+        })
+        $('.edit-data').click(function() {
+            uni_modal("Edit Employee", "{% url 'manage_employees-page' %}?id=" + $(this).attr('data-id'), 'modal-lg')
+        })
+        $('.delete-data').click(function() {
+            _conf("Are you sure to delete this employee?", "delete_employee", [$(this).attr('data-id')])
+        })
+    })
+
+    function delete_employee($id) {
+        start_loader();
+        $.ajax({
+            headers: {
+                "X-CSRFToken": '{{csrf_token}}'
+            },
+            url: "{% url 'delete-employee' %}",
+            method: "POST",
+            data: {
+                id: $id
+            },
+            dataType: "json",
+            error: err => {
+                console.log(err)
+                alert_toast("An error occured.", 'error');
+                end_loader();
+            },
+            success: function(resp) {
+                if (typeof resp == 'object' && resp.status == 'success') {
+                    location.reload();
+                } else {
+                    alert_toast("An error occured.", 'error');
+                    end_loader();
+                }
+            }
+        })
+    }
+</script>
+
+{% endblock ScriptBlock %}

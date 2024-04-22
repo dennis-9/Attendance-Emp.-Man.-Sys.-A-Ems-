@@ -47,6 +47,17 @@ class Employees(models.Model):
         return self.firstname + ' ' +self.middlename + ' '+self.lastname + ' '
     
     
+    # API
     # Fingerprint Model
+class Fingerprint(models.Model):
+    finger_data = models.TextField()  # serialized fingerprint data
+    employee_id = models.ForeignKey(Employees, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+    scan_time = models.DateTimeField(null=True, blank=True)  # time of fingerprint scan
+    scan_status = models.BooleanField(default=False)  # status of fingerprint scan (True for successful scan, False for failed scan)
     
+def str(self):
+    return f"Fingerprint for {self.employee_id.firstname} {self.employee_id.lastname}"
+
 

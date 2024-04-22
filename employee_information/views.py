@@ -5,7 +5,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 import json
-
+# API
+from rest_framework.response import Response
+from rest_framework import generics, status
+from .serializers import FingerprintSerializer
+from .models import Fingerprint
+from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 
 employees = [
 
@@ -48,18 +54,19 @@ def logoutuser(request):
     logout(request)
     return redirect('/')
 
-# Create your views here.
+# Creating views here.
 @login_required
 def home(request):
     
 # Logic to fetch data from models
-# So this fetches data from various models (Department, Position, Employees) and passes it to the template.
+# So this fetches data from various models (Department, Position, Employees, Fingerprints) and passes it to the template.
     context = {
         'page_title':'Home',
         'employees':employees,
         'total_department':len(Department.objects.all()),
         'total_position':len(Position.objects.all()),
         'total_employee':len(Employees.objects.all()),
+        'total_fingerprint':(Fingerprint.objects.all()),
     }
     return render(request, 'employee_information/home.html',context)
 
@@ -124,6 +131,8 @@ def delete_department(request):
         resp['status'] = 'failed'
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
+
+
 # Positions
 # The Positions View is almost similar to the department views and same logic as well
 @login_required
@@ -175,6 +184,8 @@ def delete_position(request):
     except:
         resp['status'] = 'failed'
     return HttpResponse(json.dumps(resp), content_type="application/json")
+
+
 
 
 
@@ -270,12 +281,12 @@ def view_employee(request):
 
 
 
-
-
+# TODO:----------------------------------------------------------------TODO
+# TODO:----------------------------------------------------------------TODO
 # TODO:----------------------------------------------------------------TODO
 
 @login_required
-def attendance(request):
+def employee_info(request):
     pass
     employee_list = Employees.objects.all()
     # Logic to fetch employee data from models
@@ -363,3 +374,108 @@ def view_employee(request):
         'positions' : positions
     }
     return render(request, 'employee_information/view_employee.html',context)
+
+# TODO----------------------------------------------------------------
+
+
+
+
+
+
+# Fingerprints
+@login_required
+def register_fingerprint(request):
+    if request.method == 'POST':
+        fingerprint_data = request.POST.get('fingerprint_data')
+        # Store the fingerprint data in the database
+        # ...
+        return HttpResponse('Fingerprint registered successfully!')
+    return render(request, 'employee_information/register_fingerprint.html')
+
+
+
+# API
+class FingerprintSensorView(APIView):
+    def post(self, request):
+        # Handle incoming fingerprint data from sensor
+        finger_data = request.data['finger_data']
+        # Search for a matching fingerprint in the database
+        fingerprint = Fingerprint.objects.filter(finger_data=finger_data).first()
+        if fingerprint:
+            # Retrieve the associated employee information
+            try:
+                employee = Employees.objects.get(id=fingerprint.employee_id)
+                return Response({
+                    'employee_id': employee.id,
+                    'firstname': employee.firstname,
+                    'lastname': employee.lastname,
+                    'department': employee.department_id.name,
+                    'position': employee.position_id.name,
+                }, status=status.HTTP_200_OK)
+            except Employees.DoesNotExist:
+                return Response({'error': 'Employee not found'}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({'error': 'No matching fingerprint found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        
+    
+
+def employee_info(request):
+    employee_id = request.GET.get('employee_id')
+    if employee_id:
+        try:
+            employee = Employees.objects.get(id=employee_id)
+            fingerprint = Fingerprint.objects.filter(employee=employee).order_by('-scan_time').first()
+            if fingerprint:
+                scan_time = fingerprint.scan_time.strftime('%Y-%m-%d %H:%M:%S')
+            else:
+                scan_time = None
+            return render(request, 'employee_info.html', {
+                'employee_id': employee.id,
+                'firstname': employee.firstname,
+                'lastname': employee.lastname,
+                'department': employee.department_id.name,
+                'position': employee.position_id.name,
+                'scan_time': scan_time,
+            })
+        except Employees.DoesNotExist:
+            return HttpResponse('Employee not found', status=404)
+    else:
+        return HttpResponse('Employee ID is required', status=400)
+    
+    
+    
+
+@api_view(['POST'])
+def authenticate_fingerprint(request):
+    if request.method == 'POST':
+        # Receive fingerprint data from the Raspberry Pi
+        finger_data = request.data.get('finger_data')
+        if finger_data:
+            # Search for a matching fingerprint in the database
+            fingerprint = Fingerprint.objects.filter(finger_data=finger_data).first()
+            if fingerprint:
+                # Retrieve the associated employee information
+                employee = fingerprint.employee_id
+                # Return the employee information
+                return Response({
+                    'employee_id': employee.id,
+                    'firstname': employee.firstname,
+                    'lastname': employee.lastname,
+                    'department': employee.department_id.name,
+                    'position': employee.position_id.name,
+                }, status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'No matching fingerprint found'}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({'error': 'Fingerprint data is required'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+"""@login_required
+def attendance(request):
+    employee_list = Employees.objects.all()
+    context = {
+        'page_title': 'Attendance',
+        'employees': employee_list,
+    }
+    return render(request, 'employee_information/attendance.html', context)"""

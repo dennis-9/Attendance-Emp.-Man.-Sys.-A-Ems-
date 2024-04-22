@@ -24,7 +24,13 @@ urlpatterns = [
     path('save_employee', views.save_employee, name="save-employee-page"),
     path('delete_employee', views.delete_employee, name="delete-employee"),
     path('view_employee', views.view_employee, name="view-employee-page"),
-    path('attendance', views.attendance, name="attendance-page"),
-
     
+    
+    
+    # API
+    path('fingerprints/sensor/', views.FingerprintSensorView.as_view(), name='fingerprint-sensor'),
+    path('employee_info/', views.employee_info, name='employee-info'),
+
+    path('authenticate_fingerprint/', views.authenticate_fingerprint, name='authenticate-fingerprint'),
+
 ]
