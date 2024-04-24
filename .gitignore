@@ -1,8 +1,8 @@
 # Django-specific files
-*.log
-__pycache__/
-local_settings.py
-db.sqlite3
+#*.log
+#__pycache__/
+#local_settings.py
+#db.sqlite3
 
 # Virtual Environment
 .env
@@ -10,14 +10,14 @@ myenv/
 env
 
 # PyCharm-specific files
-.idea/
-.DS_Store
-Thumbs.db
+#.idea/
+#.DS_Store
+#Thumbs.db
 
 # Other files
-.coverage
-.tox/
-.eggs/
+#.coverage
+#.tox/
+#.eggs/
 
 # Byte-compiled files
-*.pyc
+#*.pyc
