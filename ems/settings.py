@@ -28,10 +28,8 @@ environ.Env.read_env()
 SECRET_KEY = 'django-insecure--w(dug*va_megpa25w$gmv8o6+f8!fg_*m1^u$)z25pab0hicm'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'ems/static')
+DEBUG = True
+
 ALLOWED_HOSTS = ["*"]
 
 
@@ -53,15 +51,20 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    #Whitenoise
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    
 ]
 
 ROOT_URLCONF = 'ems.urls'
+
 
 TEMPLATES = [
     {
@@ -92,13 +95,31 @@ WSGI_APPLICATION = 'ems.wsgi.application'
     }
 }"""
 
-# Render PostgreSQL Database
-import dj_database_url
 
 DATABASES = {
-    'default': dj_database_url.parse(env('DATABASE_URL'))
-    
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        
+        'NAME': 'attendance_system',
+        
+        'USER': 'dennis',
+        
+        'PASSWORD': 'Makers1234',
+        
+        'HOST': 'database-1.ctkkosooqb9w.eu-north-1.rds.amazonaws.com',
+        
+        'PORT': '5432',
+    }
 }
+
+
+# Render PostgreSQL Database
+# import dj_database_url
+
+# DATABASES = {
+#     'default': dj_database_url.parse(env('DATABASE_URL'))
+    
+# }
 
 
 # Password validation
@@ -142,6 +163,13 @@ STATICFILES_DIRS = (
     # location of your application, should not be public web accessible 
     './static',
 )
+
+STATIC_ROOT = "./staticfiles/"
+
+#WhiteNoise configuration
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
