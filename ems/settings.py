@@ -91,7 +91,9 @@ WSGI_APPLICATION = 'ems.wsgi.application'
 }"""
 
 
-DATABASES = {
+
+#AWS Database with RDS
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         
@@ -105,7 +107,7 @@ DATABASES = {
         
         'PORT': '5432',
     }
-}
+}"""
 
 
 # Render PostgreSQL Database
