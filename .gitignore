@@ -1,6 +1,6 @@
 # Django-specific files
-*.log
-__pycache__/
+#*.log
+#__pycache__/
 local_settings.py
 #db.sqlite3
 attendance_system
