@@ -3,7 +3,7 @@
 __pycache__/
 local_settings.py
 #db.sqlite3
-db.attendance_system
+attendance_system
 
 # Virtual Environment
 .env
