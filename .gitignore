@@ -1,19 +1,19 @@
 # Django-specific files
 #*.log
 #__pycache__/
-local_settings.py
+#local_settings.py
 #db.sqlite3
-attendance_system
+#attendance_system
 
 # Virtual Environment
-.env
-myenv/
-env
+#.env
+#myenv/
+#env
 
 # PyCharm-specific files
-.idea/
-.DS_Store
-Thumbs.db
+#.idea/
+#.DS_Store
+#Thumbs.db
 
 # Other files
 #.coverage
