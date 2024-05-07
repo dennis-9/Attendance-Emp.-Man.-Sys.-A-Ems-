@@ -6,9 +6,9 @@
 #attendance_system
 
 # Virtual Environment
-#.env
-#myenv/
-#env
+.env
+myenv/
+env
 
 # PyCharm-specific files
 #.idea/

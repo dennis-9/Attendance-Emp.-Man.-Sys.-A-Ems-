@@ -17,6 +17,11 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -24,9 +29,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure--w(dug*va_megpa25w$gmv8o6+f8!fg_*m1^u$)z25pab0hicm'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vercel.app']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -84,13 +89,13 @@ WSGI_APPLICATION = 'ems.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+"""
 
 
 #AWS Database with RDS
@@ -111,13 +116,13 @@ DATABASES = {
 }
 """
 
-# Render PostgreSQL Database
-# import dj_database_url
+#Render PostgreSQL Database
+import dj_database_url
 
-# DATABASES = {
-#     'default': dj_database_url.parse(env('DATABASE_URL'))
+DATABASES = {
+    'default': dj_database_url.parse(env('DATABASE_URL'))
     
-# }
+}
 
 
 # Password validation
